@@ -3,22 +3,14 @@ import axios from "axios"
 const API = "https://pokeapi.co/api/v2"
 
 export const getPokemons = () =>
-  axios.get(`${API}/pokemon?limit=20`)
+  axios.get(`${API}/pokemon?limit=50`)
 
-export const getPokemonAbility = async (id) => {
-  const { data } = await axios.get(`${API}/ability/${id}`)
-
-  const effectFr = data.effect_entries.find(
-    (e) => e.language.name === "fr"
-  )
-
-  const nameFr = data.names.find(
-    (n) => n.language.name === "fr"
-  )
-
-  return {
-    name: nameFr?.name,
-    effect: effectFr?.effect,
-    shortEffect: effectFr?.short_effect,
+export const getPokemonDetails = async (name) => {  
+  const response = await axios.get(`${API}/pokemon/${name.toLowerCase()}`)
+  console.log(response)
+  if (response.status === 200) {
+    return response.data
+  }else {
+    throw new Error(`recuperer des donnée echoué pour :  ${name}`)
   }
 }

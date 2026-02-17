@@ -4,17 +4,13 @@ import { getPokemons } from "../services/pokeapi.js";
 import PokemonCard from "../components/PokemonCard.vue";
 
 const pokemons = ref([]);
-const getIdFromUrl = (url) => {
-  const parts = url.split("/").filter(Boolean)
-  return parts[parts.length - 1]
-}
+
 onMounted(async () => {
   const res = await getPokemons();
 
   pokemons.value = res.data.results.map((p) => ({
     name: p.name,
     image: `https://img.pokemondb.net/sprites/home/normal/${p.name}.png`,
-    id: getIdFromUrl(p.url),
   }));
 });
 </script>

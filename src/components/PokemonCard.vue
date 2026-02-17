@@ -7,7 +7,7 @@ defineProps(['pokemon'])
     <img :src="pokemon.image" class="w-24 mx-auto" />
     <h2 class="text-center capitalize">{{ pokemon.name }}</h2>
 
-    <router-link :to="`/pokemon/${pokemon.id}`">
+    <router-link :to="`/pokemon/${pokemon.name}`">
       Détails
     </router-link>
   </div>
