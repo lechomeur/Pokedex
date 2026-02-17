@@ -6,9 +6,24 @@
   >
     <div class="card-bg-icon"></div>
 
-    <router-link :to="`/pokemon/${pokemon.name}`">
-      Détails
-    </router-link>
+    <div class="card-info">
+      <span class="pokemon-id">#{{ formatId(pokemon.id) }}</span>
+      <h3 class="pokemon-name">{{ pokemon.name }}</h3>
+      
+      <div class="types-container">
+        <span 
+          v-for="type in pokemon.types" 
+          :key="type" 
+          class="type-badge"
+        >
+          {{ type }}
+        </span>
+      </div>
+    </div>
+
+    <div class="image-container">
+      <img :src="pokemon.image" :alt="pokemon.name" />
+    </div>
   </div>
 </template>
 
