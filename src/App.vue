@@ -1,84 +1,72 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/Pokedex-wiki-logo.png" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/poketeam">PokeTeam</RouterLink>
-      </nav>
+  <div class="app-container">
+    <Navbar />
+    <div class="page-content">
+      <router-view />
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<script setup lang="ts">
+import Navbar from '@/components/NavBar.vue';
+</script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+body, html {
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  min-height: 100vh;
+  color: #2c3e50;
+  background-color: #f6f8fc;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 10C27.9 10 10 27.9 10 50s17.9 40 40 40 40-17.9 40-40S72.1 10 50 10zm0 10c14.2 0 26.1 9.9 29.2 23.3H63.5c-2.4-5.3-7.7-9-13.5-9s-11.1 3.7-13.5 9H20.8C23.9 29.9 35.8 20 50 20zm0 60c-14.2 0-26.1-9.9-29.2-23.3H36.5c2.4 5.3 7.7 9 13.5 9s11.1-3.7 13.5-9h15.7C76.1 70.1 64.2 80 50 80zm0-24.3c-3.1 0-5.7-2.6-5.7-5.7s2.6-5.7 5.7-5.7 5.7 2.6 5.7 5.7-2.6 5.7-5.7 5.7z' fill='rgba(0,0,0,0.04)'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  /* Posicionamos ela bem grande saindo um pouco da tela à direita */
+  background-position: calc(100% + 160px) -160px; 
+  background-attachment: fixed;
+  background-size: 850px; 
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+
+/* Modo Dark - pokeball */
+body.dark-theme {
+  background-color: #0b0e14; 
+  color: #f1f1f1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 10C27.9 10 10 27.9 10 50s17.9 40 40 40 40-17.9 40-40S72.1 10 50 10zm0 10c14.2 0 26.1 9.9 29.2 23.3H63.5c-2.4-5.3-7.7-9-13.5-9s-11.1 3.7-13.5 9H20.8C23.9 29.9 35.8 20 50 20zm0 60c-14.2 0-26.1-9.9-29.2-23.3H36.5c2.4 5.3 7.7 9 13.5 9s11.1-3.7 13.5-9h15.7C76.1 70.1 64.2 80 50 80zm0-24.3c-3.1 0-5.7-2.6-5.7-5.7s2.6-5.7 5.7-5.7 5.7 2.6 5.7 5.7-2.6 5.7-5.7 5.7z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.dark-theme h1, 
+.dark-theme .logo-text {
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255,255,255,0.05);
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+.dark-theme input {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
 }
 
-nav a:first-of-type {
-  border: 0;
+.dark-theme input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.app-container {
+  width: 100%;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.page-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 2; 
 }
 </style>
