@@ -22,7 +22,7 @@ onMounted(async () => {
 
     effects.forEach((data, index) => {
       // verication tradution fr
-      const fr = data?.effect_entries?.find((e: any) => e.language.name === "fr");
+      const fr = data?.effect_entries?.find((e: any) => e.language.name === "en");
       
       if (fr && res.abilities[index]) {
         const abilityName = res.abilities[index].ability.name;
