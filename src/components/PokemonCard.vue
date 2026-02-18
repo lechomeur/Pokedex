@@ -1,6 +1,6 @@
 <template>
-  <div 
-    class="pokemon-card" 
+  <div
+    class="pokemon-card"
     :style="cardStyle"
     @click="$router.push(`/pokemon/${pokemon.id}`)"
   >
@@ -9,13 +9,9 @@
     <div class="card-info">
       <span class="pokemon-id">#{{ formatId(pokemon.id) }}</span>
       <h3 class="pokemon-name">{{ pokemon.name }}</h3>
-      
+
       <div class="types-container">
-        <span 
-          v-for="type in pokemon.types" 
-          :key="type" 
-          class="type-badge"
-        >
+        <span v-for="type in pokemon.types" :key="type" class="type-badge">
           {{ type }}
         </span>
       </div>
@@ -24,12 +20,15 @@
     <div class="image-container">
       <img :src="pokemon.image" :alt="pokemon.name" />
     </div>
+    <div class="card-actions">
+      <slot />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { typeColors } from '@/utils/colors'; 
+import { computed } from "vue";
+import { typeColors } from "@/utils/colors";
 
 interface Pokemon {
   id: number;
@@ -39,24 +38,23 @@ interface Pokemon {
 }
 
 const props = defineProps<{
-  pokemon: Pokemon
+  pokemon: Pokemon;
 }>();
 
-const formatId = (id: number) => id.toString().padStart(3, '0');
+const formatId = (id: number) => id.toString().padStart(3, "0");
 
 // background dinâmico
 const cardStyle = computed(() => {
-  const primaryType = props.pokemon.types?.[0]?.toLowerCase() || 'normal';
+  const primaryType = props.pokemon.types?.[0]?.toLowerCase() || "normal";
   const color = typeColors[primaryType] || typeColors.normal;
-  
+
   return {
-    background: `radial-gradient(circle at top right, ${color}, rgba(0,0,0,0.1))`
+    background: `radial-gradient(circle at top right, ${color}, rgba(0,0,0,0.1))`,
   };
 });
 </script>
 
 <style scoped>
-
 .pokemon-card {
   display: flex;
   justify-content: space-between;

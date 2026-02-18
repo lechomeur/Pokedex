@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 import PokemonCard from "@/components/PokemonCard.vue";
-import { getPokemons, getPokemonDetails } from "../services/pokeapi"; 
-import type { PokemonListItem, PokemonType } from "../services/pokeapi"; 
+import { getPokemons, getPokemonDetails } from "../services/pokeapi";
+import type { PokemonListItem, PokemonType } from "../services/pokeapi";
+import { useTeamStore } from "@/stores/pokeTeam"
+
 
 interface Pokemon {
   id: number;
@@ -17,9 +19,17 @@ const loading = ref(true);
 
 const filteredPokemon = computed(() =>
   pokemonList.value.filter((poke) =>
-    poke.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-  )
+    poke.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  ),
 );
+
+
+const teamStore = useTeamStore()
+
+function addToMyTeam(pokemon: Pokemon) {
+  teamStore.addPokemon(pokemon)
+}
+
 
 onMounted(async () => {
   try {
@@ -28,14 +38,14 @@ onMounted(async () => {
 
     const detailedPokemons = await Promise.all(
       res.data.results.map(async (p: PokemonListItem) => {
-        const details = await getPokemonDetails(p.name); 
+        const details = await getPokemonDetails(p.name);
         return {
           id: details.id,
           name: details.name,
           image: `https://img.pokemondb.net/sprites/home/normal/${details.name}.png`,
           types: details.types.map((t: PokemonType) => t.type.name),
         };
-      })
+      }),
     );
 
     pokemonList.value = detailedPokemons;
@@ -46,9 +56,6 @@ onMounted(async () => {
   }
 });
 </script>
-
-
-
 
 <template>
   <main class="home-container">
@@ -75,7 +82,14 @@ onMounted(async () => {
         v-for="poke in filteredPokemon"
         :key="poke.id"
         :pokemon="poke"
-      />
+        :onAddToMyTeam="addToMyTeam"
+      >
+        <div class="btn-container">
+          <button class="add-btn" @click.stop="addToMyTeam(poke)">
+            Ajouter dans mon équipe
+          </button>
+        </div>
+      </PokemonCard>
     </div>
 
     <div v-if="filteredPokemon.length === 0 && !loading" class="no-results">
@@ -175,4 +189,34 @@ onMounted(async () => {
     grid-template-columns: 1fr;
   }
 }
+
+.card-actions {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.add-btn {
+  pointer-events: auto;
+  background: linear-gradient(135deg, #fb5584, #ff7aa2);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 14px;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 8px 20px rgba(251, 85, 132, 0.35);
+}
+
+.add-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 25px rgba(251, 85, 132, 0.5);
+}
+
 </style>

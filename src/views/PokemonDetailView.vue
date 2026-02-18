@@ -12,7 +12,6 @@ const species = ref("");
 const height = ref(0);
 const weight = ref(0);
 
-// ✅ accessible dans le template
 const abilityEffectsFR = ref<Record<string, string>>({});
 
 onMounted(async () => {

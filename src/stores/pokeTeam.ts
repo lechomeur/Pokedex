@@ -1,23 +1,31 @@
 import { defineStore } from 'pinia'
 
-interface Pokemon {
+interface TeamPokemon {
+  id: number
   name: string
-  nickname?: string
-  image?: string
+  nickname: string
+  role:[string]
 }
 
-export const useTeamStore = defineStore('team', {
+export const useTeamStore = defineStore("team", {
   state: () => ({
-    team: [] as Pokemon[]
+    team: [] as TeamPokemon[],
   }),
 
   actions: {
-    addPokemon(pokemon: Pokemon) {
-      this.team.push(pokemon)
+    addPokemon(pokemon: TeamPokemon) {
+      if (this.team.length < 6) {
+        this.team.push(pokemon)
+      }
     },
 
     removePokemon(index: number) {
       this.team.splice(index, 1)
+    },
+
+    updatePokemon(index: number, data: Partial<TeamPokemon>) {
+      this.team[index] = { ...this.team[index], ...data } as TeamPokemon
     }
-  }
+  },
 })
+
