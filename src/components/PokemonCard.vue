@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { typeColors } from '@/utils/colors'; 
+import { typeGradients } from '@/utils/colors'; 
 
 interface Pokemon {
   id: number;
@@ -44,13 +44,13 @@ const props = defineProps<{
 
 const formatId = (id: number) => id.toString().padStart(3, '0');
 
-// background dinâmico
+// background dinâmique
 const cardStyle = computed(() => {
   const primaryType = props.pokemon.types?.[0]?.toLowerCase() || 'normal';
-  const color = typeColors[primaryType] || typeColors.normal;
+  const gradient = typeGradients[primaryType] || typeGradients.normal;
   
   return {
-    background: `radial-gradient(circle at top right, ${color}, rgba(0,0,0,0.1))`
+    background: gradient
   };
 });
 </script>
