@@ -4,11 +4,13 @@
     <div class="page-content">
       <router-view />
     </div>
+    <TheFooter />
   </div>
 </template>
 
 <script setup lang="ts">
 import Navbar from '@/components/NavBar.vue';
+import TheFooter from '@/components/Footer.vue';
 </script>
 
 <style>
@@ -59,6 +61,7 @@ body.dark-theme {
 
 .app-container {
   width: 100%;
+  min-height: 100vh;
 }
 
 .page-content {
@@ -68,5 +71,9 @@ body.dark-theme {
   padding: 40px 20px;
   position: relative;
   z-index: 2; 
+}
+
+router-view {
+  flex: 1; /* Isso empurra o footer para baixo */
 }
 </style>
